@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FYNDAREN.SE | Sveriges Exklusiva Marknadsplats</title>
+    <link rel="icon" type="image/jpeg" href="1792881454031.jpg">
+    <link rel="apple-touch-icon" href="1792881454031.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0a0b0d;
             --bg-card: rgba(20, 24, 33, 0.75);
-            --bg-card-glow: rgba(30, 36, 50, 0.9);
             --border-gold: rgba(212, 175, 55, 0.35);
             --border-subtle: rgba(255, 255, 255, 0.08);
             --gold-primary: #d4af37;
@@ -61,17 +62,15 @@
         .logo-wrap {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             text-decoration: none;
         }
 
-        /* Hexagon Magpie Icon */
-        .hex-badge {
+        .logo-img-container {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(16, 185, 129, 0.2));
-            border: 2px solid var(--gold-primary);
-            clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+            border-radius: 12px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -79,13 +78,14 @@
             transition: transform 0.3s ease;
         }
 
-        .logo-wrap:hover .hex-badge {
-            transform: scale(1.08) rotate(3deg);
+        .logo-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .magpie-svg {
-            width: 26px;
-            height: 26px;
+        .logo-wrap:hover .logo-img-container {
+            transform: scale(1.08) rotate(3deg);
         }
 
         .brand-title {
@@ -104,8 +104,32 @@
             font-weight: 700;
         }
 
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-login {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.75rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            border-color: var(--gold-primary);
+            color: var(--gold-light);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
         .btn-add-item {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
             border: 1px solid var(--gold-primary);
             color: var(--gold-light);
             font-weight: 700;
@@ -183,9 +207,6 @@
             color: var(--text-main);
             cursor: pointer;
             transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .pill-btn:hover, .pill-btn.active {
@@ -195,13 +216,13 @@
             box-shadow: 0 0 12px var(--gold-glow);
         }
 
-        /* Main Layout Grid (Content + Sidebar) */
+        /* Layout Grid */
         .layout-grid {
             max-width: 1300px;
             margin: 0 auto;
             padding: 2rem 1.5rem 4rem;
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr 320px;
             gap: 2rem;
             width: 100%;
         }
@@ -257,6 +278,37 @@
             transform: scale(1.06);
         }
 
+        .fav-heart-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(10, 11, 13, 0.65);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.25s ease;
+            font-size: 1.1rem;
+        }
+
+        .fav-heart-btn:hover {
+            transform: scale(1.15);
+            background: rgba(10, 11, 13, 0.9);
+        }
+
+        .fav-heart-btn.liked {
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.5);
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        }
+
         .price-tag-gold {
             position: absolute;
             bottom: 12px;
@@ -310,11 +362,11 @@
             color: #ffffff;
         }
 
-        /* Circle Categories Widget */
         .circle-cat-grid {
-            display: flex;
-            gap: 1.2rem;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
         }
 
         .circle-cat-item {
@@ -327,16 +379,17 @@
         }
 
         .circle-icon {
-            width: 65px;
-            height: 65px;
+            width: 62px;
+            height: 62px;
             border-radius: 50%;
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 255, 255, 0.03));
             border: 1px solid var(--border-gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .circle-cat-item:hover .circle-icon {
@@ -345,51 +398,71 @@
             box-shadow: 0 0 15px var(--gold-glow);
         }
 
+        .badge-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .circle-label {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 600;
         }
 
-        /* Converter / Calculator Widget */
-        .calc-group {
-            margin-bottom: 1rem;
+        /* Modal Overlay for Login */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
         }
 
-        .calc-label {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-bottom: 0.4rem;
-            display: block;
+        .modal-card {
+            background: #121620;
+            border: 1px solid var(--border-gold);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            position: relative;
         }
 
-        .calc-input, .calc-select {
-            width: 100%;
-            padding: 0.7rem 0.9rem;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .btn-calc {
-            width: 100%;
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid var(--gold-primary);
-            color: var(--gold-light);
-            font-weight: 700;
-            padding: 0.7rem;
-            border-radius: 10px;
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.5rem; color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 0.5rem;
         }
 
-        .btn-calc:hover {
-            background: var(--gold-primary);
-            color: #000;
+        .modal-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+        .form-group input {
+            width: 100%; padding: 0.8rem 1rem; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle); border-radius: 10px; color: #fff; outline: none;
+        }
+        .form-group input:focus { border-color: var(--gold-primary); }
+
+        .btn-modal-submit {
+            width: 100%; background: linear-gradient(135deg, var(--gold-primary), #a3821a);
+            color: #000; font-weight: 800; padding: 0.9rem; border-radius: 10px; border: none; cursor: pointer;
+            margin-top: 0.5rem;
         }
 
         /* Footer */
@@ -427,18 +500,19 @@
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo-wrap">
-                <div class="hex-badge">
-                    <svg class="magpie-svg" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
+                <div class="logo-img-container">
+                    <img src="1792881454031.jpg" alt="Fyndaren Logga">
                 </div>
                 <div class="brand-title">
                     FYNDAREN<span class="se">SE</span>
                 </div>
             </a>
-            <a href="skapa-annons.html" class="btn-add-item">
-                <span>+</span> Lägg in fynd
-            </a>
+            <div class="nav-actions">
+                <button class="btn-login" onclick="openLoginModal()">Logga in</button>
+                <a href="skapa-annons.html" class="btn-add-item">
+                    <span>+</span> Lägg in fynd
+                </a>
+            </div>
         </div>
     </header>
 
@@ -461,7 +535,6 @@
         </div>
     </section>
 
-    <!-- Main Layout Grid -->
     <div class="layout-grid">
         
         <!-- Feed Grid -->
@@ -469,6 +542,7 @@
             
             <div class="luxury-card gold-featured" data-category="mode" data-title="Omega Speedmaster Professional">
                 <div class="card-img-wrap">
+                    <button class="fav-heart-btn" onclick="toggleLike(this)">♥</button>
                     <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=60" class="card-img" alt="Omega Watch">
                     <span class="price-tag-gold">45 000 kr</span>
                 </div>
@@ -480,6 +554,7 @@
 
             <div class="luxury-card gold-featured" data-category="fordon" data-title="Begagnad Tesla Model 3 Long Range">
                 <div class="card-img-wrap">
+                    <button class="fav-heart-btn" onclick="toggleLike(this)">♥</button>
                     <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=600&auto=format&fit=crop&q=60" class="card-img" alt="Tesla Model 3">
                     <span class="price-tag-gold">420 000 kr</span>
                 </div>
@@ -491,6 +566,7 @@
 
             <div class="luxury-card" data-category="mode" data-title="Chopard Guldarmband & Ring">
                 <div class="card-img-wrap">
+                    <button class="fav-heart-btn" onclick="toggleLike(this)">♥</button>
                     <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&auto=format&fit=crop&q=60" class="card-img" alt="Chopard Jewelry">
                     <span class="price-tag-gold">65 000 kr</span>
                 </div>
@@ -502,6 +578,7 @@
 
             <div class="luxury-card" data-category="mode" data-title="Cartier Solitär Guldring">
                 <div class="card-img-wrap">
+                    <button class="fav-heart-btn" onclick="toggleLike(this)">♥</button>
                     <img src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&auto=format&fit=crop&q=60" class="card-img" alt="Gold Ring">
                     <span class="price-tag-gold">28 000 kr</span>
                 </div>
@@ -513,6 +590,7 @@
 
             <div class="luxury-card" data-category="elektronik" data-title="iPhone 15 Pro Max 1TB">
                 <div class="card-img-wrap">
+                    <button class="fav-heart-btn" onclick="toggleLike(this)">♥</button>
                     <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600&auto=format&fit=crop&q=60" class="card-img" alt="iPhone 15">
                     <span class="price-tag-gold">16 500 kr</span>
                 </div>
@@ -524,6 +602,7 @@
 
             <div class="luxury-card" data-category="hem" data-title="Söderhamn 3-sits soffa grön IKEA">
                 <div class="card-img-wrap">
+                    <button class="fav-heart-btn" onclick="toggleLike(this)">♥</button>
                     <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&auto=format&fit=crop&q=60" class="card-img" alt="Green Sofa">
                     <span class="price-tag-gold">2 500 kr</span>
                 </div>
@@ -539,41 +618,52 @@
         <div class="sidebar-panel">
             
             <div class="widget-box">
-                <div class="widget-title">Snabbkategorier</div>
+                <div class="widget-title">Verktyg & Kategorier</div>
                 <div class="circle-cat-grid">
-                    <div class="circle-cat-item" onclick="filterCategory('fordon')">
-                        <div class="circle-icon">🚗</div>
-                        <span class="circle-label">Fordon</span>
+                    
+                    <div class="circle-cat-item" onclick="showSavedList()">
+                        <div class="circle-icon">
+                            ♥
+                            <span class="badge-count" id="savedCount">0</span>
+                        </div>
+                        <span class="circle-label">Sparlista</span>
                     </div>
-                    <div class="circle-cat-item" onclick="filterCategory('elektronik')">
-                        <div class="circle-icon">📱</div>
-                        <span class="circle-label">Elektronik</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="widget-box">
-                <div class="widget-title">Valuta & Prisräknare</div>
-                <div class="calc-group">
-                    <label class="calc-label">Från Belopp (SEK)</label>
-                    <input type="number" class="calc-input" id="calcAmount" value="10000">
+                    <div class="circle-cat-item" onclick="alert('Inga aktiva rabattkoder just nu.')">
+                        <div class="circle-icon">🏷️</div>
+                        <span class="circle-label">Rabattkoder</span>
+                    </div>
+
+                    <div class="circle-cat-item" onclick="alert('Markera två fynd för att jämföra specifikationer.')">
+                        <div class="circle-icon">⚖️</div>
+                        <span class="circle-label">Jämför</span>
+                    </div>
+
                 </div>
-                <div class="calc-group">
-                    <label class="calc-label">Till Valuta</label>
-                    <select class="calc-select" id="calcCurrency">
-                        <option value="EUR">EUR (€)</option>
-                        <option value="USD">USD ($)</option>
-                    </select>
-                </div>
-                <button class="btn-calc" onclick="calculateCurrency()">Beräkna Värde</button>
-                <div id="calcResult" style="margin-top: 0.8rem; font-weight: 700; color: var(--gold-light); font-size: 0.9rem; text-align: center;"></div>
             </div>
 
         </div>
-
     </div>
 
-    <!-- Footer -->
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-card">
+            <span class="close-modal" onclick="closeLoginModal()">&times;</span>
+            <div class="modal-title">Logga in på Fyndaren</div>
+            <form onsubmit="event.preventDefault(); alert('Inloggad!'); closeLoginModal();">
+                <div class="form-group">
+                    <label>E-postadress</label>
+                    <input type="email" placeholder="namn@exempel.se" required>
+                </div>
+                <div class="form-group">
+                    <label>Lösenord</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-modal-submit">Logga In</button>
+            </form>
+        </div>
+    </div>
+
     <footer>
         <div>
             <a href="integritetspolicy.html">Integritetspolicy</a> · 
@@ -584,6 +674,22 @@
     </footer>
 
     <script>
+        let likedCount = 0;
+
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+            if (btn.classList.contains('liked')) {
+                likedCount++;
+            } else {
+                likedCount--;
+            }
+            document.getElementById('savedCount').innerText = likedCount;
+        }
+
+        function showSavedList() {
+            alert(`Du har ${likedCount} sparade fynd i din sparlista!`);
+        }
+
         function filterFeed() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const cards = document.querySelectorAll('.luxury-card');
@@ -599,7 +705,7 @@
             const buttons = document.querySelectorAll('.pill-btn');
 
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event) event.target.classList.add('active');
 
             cards.forEach(card => {
                 if (cat === 'alla' || card.getAttribute('data-category') === cat) {
@@ -610,12 +716,12 @@
             });
         }
 
-        function calculateCurrency() {
-            const sek = parseFloat(document.getElementById('calcAmount').value);
-            const curr = document.getElementById('calcCurrency').value;
-            let rate = curr === 'EUR' ? 0.088 : 0.095;
-            let result = (sek * rate).toFixed(2);
-            document.getElementById('calcResult').innerText = `= ${result} ${curr}`;
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
         }
     </script>
 </body>
