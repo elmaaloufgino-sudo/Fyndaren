@@ -14,7 +14,6 @@
             --gold-primary: #d4af37;
             --gold-light: #f3e5ab;
             --gold-glow: rgba(212, 175, 55, 0.25);
-            --emerald-glow: rgba(16, 185, 129, 0.2);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -40,7 +39,7 @@
                 radial-gradient(circle at 100% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
         }
 
-        /* 1. AUTO-RUNNING TICKER BANNER (Rullande Erbjudanden) */
+        /* Live Ticker Banner */
         .live-ticker-wrap {
             background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(16, 185, 129, 0.15), rgba(212, 175, 55, 0.15));
             border-bottom: 1px solid var(--border-gold);
@@ -101,7 +100,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-subtle);
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
         }
 
         .nav-container {
@@ -115,13 +114,13 @@
         .logo-wrap {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
         }
 
         .logo-svg-emblem {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             filter: drop-shadow(0 0 12px var(--gold-glow));
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -131,7 +130,7 @@
         }
 
         .brand-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             background: linear-gradient(135deg, #ffffff 40%, var(--gold-light));
@@ -144,8 +143,8 @@
             border: 1px solid var(--gold-primary);
             color: var(--gold-light);
             font-weight: 700;
-            font-size: 0.88rem;
-            padding: 0.7rem 1.4rem;
+            font-size: 0.85rem;
+            padding: 0.6rem 1.1rem;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -162,7 +161,7 @@
 
         /* Hero Search Area */
         .hero-section {
-            padding: 2.5rem 1.5rem 1.5rem;
+            padding: 2rem 1rem 1rem;
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
@@ -170,31 +169,31 @@
 
         .search-bar-wrap {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 1.2rem 1.5rem 1.2rem 3.4rem;
+            padding: 1rem 1.2rem 1rem 3rem;
             background: rgba(17, 20, 29, 0.7);
             border: 1.5px solid var(--border-gold);
             border-radius: 25px;
             color: #fff;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             outline: none;
-            box-shadow: 0 0 30px var(--gold-glow);
+            box-shadow: 0 0 25px var(--gold-glow);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             border-color: var(--gold-light);
             background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.4);
         }
 
         .search-icon-svg {
             position: absolute;
-            left: 1.3rem;
+            left: 1.1rem;
             top: 50%;
             transform: translateY(-50%);
             stroke: var(--gold-primary);
@@ -202,7 +201,7 @@
 
         .category-pills {
             display: flex;
-            gap: 0.6rem;
+            gap: 0.5rem;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -210,9 +209,9 @@
         .pill-btn {
             background: rgba(17, 20, 29, 0.7);
             border: 1px solid var(--border-gold);
-            padding: 0.55rem 1.3rem;
+            padding: 0.45rem 1.1rem;
             border-radius: 20px;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--text-main);
             cursor: pointer;
@@ -224,43 +223,58 @@
             border-color: var(--gold-light);
             color: var(--gold-light);
             box-shadow: 0 0 15px var(--gold-glow);
-            transform: translateY(-2px);
         }
 
-        /* Main Container & Feed Grid */
+        /* Main Container & Feed Grid (2-i-bredd på mobil) */
         .main-container {
             max-width: 1250px;
             margin: 0 auto;
-            padding: 1.5rem 1.5rem 3rem;
+            padding: 1rem 0.8rem 3rem;
             width: 100%;
         }
 
         .feed-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 1.8rem;
+            /* För skärmar upp till 767px visas korten 2 och 2 */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .feed-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
         }
 
         .luxury-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .luxury-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             border-color: var(--gold-primary);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px var(--gold-glow);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.8), 0 0 20px var(--gold-glow);
         }
 
         .card-img-wrap {
-            height: 220px;
+            height: 150px;
             width: 100%;
             position: relative;
             overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .card-img-wrap {
+                height: 200px;
+            }
         }
 
         .card-img {
@@ -274,8 +288,8 @@
 
         .fav-heart-btn {
             position: absolute;
-            top: 12px; right: 12px;
-            width: 38px; height: 38px;
+            top: 8px; right: 8px;
+            width: 32px; height: 32px;
             border-radius: 50%;
             background: rgba(7, 8, 10, 0.7);
             backdrop-filter: blur(8px);
@@ -284,11 +298,11 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; z-index: 5;
             transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
 
         .fav-heart-btn:hover {
-            transform: scale(1.2);
+            transform: scale(1.15);
             background: rgba(7, 8, 10, 0.9);
         }
 
@@ -298,16 +312,40 @@
         }
 
         .price-tag-gold {
-            position: absolute; bottom: 12px; right: 12px;
+            position: absolute; bottom: 8px; right: 8px;
             background: linear-gradient(135deg, var(--gold-primary), #a3821a);
-            color: #000; font-weight: 800; font-size: 0.9rem;
-            padding: 0.4rem 0.9rem; border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            color: #000; font-weight: 800; font-size: 0.78rem;
+            padding: 0.3rem 0.65rem; border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
 
-        .card-body { padding: 1.2rem; }
-        .card-title { font-weight: 700; font-size: 1.08rem; margin-bottom: 0.4rem; color: #fff; }
-        .card-meta { font-size: 0.82rem; color: var(--text-muted); }
+        .card-body { 
+            padding: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .card-title { 
+            font-weight: 700; 
+            font-size: 0.88rem; 
+            margin-bottom: 0.3rem; 
+            color: #fff;
+            line-height: 1.25;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .card-title {
+                font-size: 1.05rem;
+            }
+        }
+
+        .card-meta { font-size: 0.72rem; color: var(--text-muted); }
 
         /* Bottom Sticky Navigation Bar */
         .bottom-nav-bar {
@@ -318,7 +356,7 @@
             -webkit-backdrop-filter: blur(25px);
             border-top: 1px solid var(--border-gold);
             z-index: 150;
-            padding: 0.65rem 1rem;
+            padding: 0.6rem 0.8rem;
             box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.9);
         }
 
@@ -339,7 +377,7 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             transition: all 0.25s ease;
         }
@@ -349,18 +387,18 @@
         }
 
         .bottom-icon-wrap {
-            width: 40px; height: 40px;
+            width: 38px; height: 38px;
             border-radius: 50%;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid var(--border-gold);
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             position: relative;
             transition: all 0.3s ease;
         }
 
         .bottom-nav-item:hover .bottom-icon-wrap {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             border-color: var(--gold-light);
             box-shadow: 0 0 15px var(--gold-glow);
         }
@@ -416,7 +454,7 @@
 </head>
 <body>
 
-    <!-- 1. LIVE AUTO-SCROLLING TICKER -->
+    <!-- LIVE AUTO-SCROLLING TICKER -->
     <div class="live-ticker-wrap">
         <div class="ticker-move">
             <span class="ticker-item"><span class="ticker-tag">HETT</span> Omega Speedmaster - 15% under marknadspris</span>
@@ -444,7 +482,7 @@
     <!-- Hero Search -->
     <section class="hero-section">
         <div class="search-bar-wrap">
-            <svg class="search-icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <svg class="search-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
@@ -460,7 +498,7 @@
         </div>
     </section>
 
-    <!-- Main Feed Grid -->
+    <!-- Main Feed Grid (Visar 2 och 2 på mobil) -->
     <div class="main-container">
         <div class="feed-grid" id="feedGrid">
             
@@ -472,7 +510,7 @@
                 </div>
                 <div class="card-body">
                     <div class="card-title">Omega Speedmaster Professional</div>
-                    <div class="card-meta">Mode · 23 minuter sedan</div>
+                    <div class="card-meta">Mode · 23 min sedan</div>
                 </div>
             </div>
 
@@ -484,7 +522,7 @@
                 </div>
                 <div class="card-body">
                     <div class="card-title">Tesla Model 3 Long Range</div>
-                    <div class="card-meta">Fordon · 58 minuter sedan</div>
+                    <div class="card-meta">Fordon · 58 min sedan</div>
                 </div>
             </div>
 
@@ -496,7 +534,7 @@
                 </div>
                 <div class="card-body">
                     <div class="card-title">Chopard Guldarmband & Ring</div>
-                    <div class="card-meta">Mode · 12 minuter sedan</div>
+                    <div class="card-meta">Mode · 12 min sedan</div>
                 </div>
             </div>
 
@@ -508,7 +546,7 @@
                 </div>
                 <div class="card-body">
                     <div class="card-title">iPhone 15 Pro Max 1TB</div>
-                    <div class="card-meta">Elektronik · 1 timme sedan</div>
+                    <div class="card-meta">Elektronik · 1 tim sedan</div>
                 </div>
             </div>
 
@@ -596,7 +634,7 @@
 
             cards.forEach(card => {
                 const title = card.getAttribute('data-title').toLowerCase();
-                card.style.display = title.includes(query) ? 'block' : 'none';
+                card.style.display = title.includes(query) ? 'flex' : 'none';
             });
         }
 
@@ -609,7 +647,7 @@
 
             cards.forEach(card => {
                 if (cat === 'alla' || card.getAttribute('data-category') === cat) {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
