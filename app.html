@@ -92,7 +92,7 @@ header{border-radius:0;border-bottom:1px solid var(--line);background:rgba(7,16,
 .search input{color:var(--ink)}
 .search:focus-within{border-color:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
 .chip[aria-pressed="true"]{color:#07100e}
-.stats{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#0f1c18,#152722);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:8px}.stats small{font-size:11px}.stats b{font-size:16px}.stats .si{width:30px;height:30px;font-size:15px}
+.stats{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#0f1c18,#152722);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:8px}#main .stats small{font-size:11px}#main .stats b{font-size:16px}#main .stats .si{width:30px;height:30px;font-size:15px}
 .stats small{display:block;color:var(--mute);font-size:13px}.stats b{font-size:22px;color:var(--gink)}
 .stats .si{width:46px;height:46px;border-radius:12px;background:rgba(16,185,129,.15);display:grid;place-items:center;font-size:20px}
 .grid{display:flex;flex-direction:column;gap:12px}
@@ -251,10 +251,10 @@ function offers(){
   else if(err)body=`<div class="empty"><b>Något gick fel</b>${esc(err)}<button class="btn" data-retry>Försök igen</button></div>`;
   else if(!list.length)body='<div class="empty"><b>Inga träffar</b>Prova ett annat sökord eller en annan kategori.</div>';
   else body=`<div class="grid">${list.map(card).join('')}</div>`;
-  return `${DEMO?'<div class="demo">Under uppbyggnad: erbjudandena nedan är exempel tills riktiga är på plats.</div>':''}<div class="stats"><div><small>Aktiva erbjudanden</small><b>${loading||err?'–':DATA.length+' st'}</b></div><div class="si" aria-hidden="true">🏷️</div></div><h2>Heta kampanjer just nu</h2><div class="hero">${HERO.map((h,i)=>`<button class="hc" data-hero="${i}" style="background:${h.bg}"><small>Veckans erbjudande</small><b>${h.t}</b><span>${h.s}</span></button>`).join('')}</div>
+  return `${DEMO?'<div class="demo">Under uppbyggnad: erbjudandena nedan är exempel tills riktiga är på plats.</div>':''}<div class="stats"><div><small>Aktiva erbjudanden</small><b>${loading||err?'–':DATA.length+' st'}</b></div><div class="si" aria-hidden="true">🏷️</div></div>
   <div class="chips" role="group" aria-label="Kategorier">${CATS.map(c=>`<button class="chip" data-cat="${c}" aria-pressed="${c===cat}">${ICONS[c]?ICONS[c]+' ':''}${c}</button>`).join('')}</div>
   <div class="sw"><button data-mem aria-pressed="${hideMem}" aria-label="Dölj erbjudanden som kräver medlemskap"></button>Dölj erbjudanden som kräver medlemskap</div>
-  <h2>Erbjudanden<span class="n">${loading||err?'':list.length+' st'}</span></h2>${body}`}
+  <h2>Erbjudanden<span class="n">${loading||err?'':list.length+' st'}</span></h2>${body}<h2>Heta kampanjer just nu</h2><div class="hero">${HERO.map((h,i)=>`<button class="hc" data-hero="${i}" style="background:${h.bg}"><small>Veckans erbjudande</small><b>${h.t}</b><span>${h.s}</span></button>`).join('')}</div>`}
 
 function compare(){
   const gs=[...new Set(DATA.filter(o=>o.g).map(o=>o.g))];
