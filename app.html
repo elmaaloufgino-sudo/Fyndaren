@@ -355,10 +355,17 @@ async function toggleFav(id){
 }
 
 document.addEventListener('click',e=>{
+  const favButton=e.target.closest('button[data-fav]');
+  if(favButton){
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFav(Number(favButton.dataset.fav));
+    return;
+  }
   if(e.target.matches('[data-close]')){closeAuth();return}
   const b=e.target.closest('button');if(!b)return;const d=b.dataset;
   if(d.tab){tab=d.tab;anim=true;render();scrollTo(0,0)}
-  else if(d.fav){toggleFav(+d.fav)}
+  else if(d.fav){e.preventDefault();e.stopPropagation();toggleFav(Number(d.fav));return;}
   else if(d.cat){cat=d.cat;anim=true;render()}
   else if(d.hero){cat=HERO[+d.hero].cat;anim=true;render();$('.chips').scrollIntoView({behavior:'smooth'})}
   else if(d.mem!==undefined){hideMem=!hideMem;anim=true;render()}
