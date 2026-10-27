@@ -229,9 +229,20 @@
         .main-container {
             max-width: 1250px;
             margin: 0 auto;
-            padding: 1rem 0.8rem 3rem;
+            padding: 0.45rem 0.8rem 5.5rem;
             width: 100%;
         }
+
+        .offers-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 0 0 0.65rem;
+            padding: 0.2rem 0.1rem;
+        }
+        .offers-heading h2 { font-size: 1rem; line-height: 1.2; font-weight: 800; color: var(--text-main); }
+        .offers-heading span { font-size: 0.7rem; color: var(--gold-light); white-space: nowrap; }
 
         .feed-grid {
             display: grid;
@@ -500,6 +511,10 @@
 
     <!-- Main Feed Grid (Visar 2 och 2 på mobil) -->
     <div class="main-container">
+        <div class="offers-heading">
+            <h2>Aktiva erbjudanden</h2>
+            <span id="offersCount">4 fynd just nu</span>
+        </div>
         <div class="feed-grid" id="feedGrid">
             
             <div class="luxury-card" data-category="mode" data-title="Omega Speedmaster Professional">
@@ -612,20 +627,56 @@
     </footer>
 
     <script>
-        let likedCount = 0;
+        const FAVORITES_KEY = 'fyndaren-favorites-v1';
+
+        function readFavorites() {
+            try {
+                const value = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+                return Array.isArray(value) ? value : [];
+            } catch (_) {
+                return [];
+            }
+        }
+
+        function updateFavoriteUI() {
+            const favorites = readFavorites();
+            document.querySelectorAll('.luxury-card').forEach(card => {
+                const title = card.getAttribute('data-title') || card.querySelector('.card-title')?.textContent.trim() || '';
+                const button = card.querySelector('.fav-heart-btn');
+                if (!button) return;
+                const liked = favorites.includes(title);
+                button.classList.toggle('liked', liked);
+                button.setAttribute('aria-pressed', String(liked));
+                button.setAttribute('aria-label', liked ? 'Ta bort från sparlistan' : 'Spara i sparlistan');
+            });
+            const count = document.getElementById('savedCount');
+            if (count) count.textContent = String(favorites.length);
+        }
 
         function toggleLike(btn) {
-            btn.classList.toggle('liked');
-            if (btn.classList.contains('liked')) {
-                likedCount++;
-            } else {
-                likedCount--;
+            const card = btn.closest('.luxury-card');
+            if (!card) return;
+            const title = card.getAttribute('data-title') || card.querySelector('.card-title')?.textContent.trim();
+            if (!title) return;
+            const favorites = readFavorites();
+            const index = favorites.indexOf(title);
+            if (index >= 0) favorites.splice(index, 1);
+            else favorites.push(title);
+            try {
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+                updateFavoriteUI();
+            } catch (_) {
+                alert('Favoriten kunde inte sparas på den här enheten. Kontrollera webbläsarens lagringsinställningar.');
             }
-            document.getElementById('savedCount').innerText = likedCount;
         }
 
         function showSavedList() {
-            alert(`Du har ${likedCount} sparade fynd i din sparlista!`);
+            const favorites = readFavorites();
+            if (!favorites.length) {
+                alert('Din sparlista är tom. Tryck på hjärtat på ett fynd för att spara det.');
+                return;
+            }
+            alert('Din sparlista:\\n\\n' + favorites.map((title, i) => (i + 1) + '. ' + title).join('\\n'));
         }
 
         function filterFeed() {
@@ -661,6 +712,9 @@
         function closeLoginModal() {
             document.getElementById('loginModal').style.display = 'none';
         }
+
+        document.addEventListener('DOMContentLoaded', updateFavoriteUI);
+        updateFavoriteUI();
     </script>
 </body>
 </html>
