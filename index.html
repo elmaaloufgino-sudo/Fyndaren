@@ -519,7 +519,7 @@
             
             <div class="luxury-card" data-category="mode" data-title="Omega Speedmaster Professional">
                 <div class="card-img-wrap">
-                    <button class="fav-heart-btn" onclick="toggleLike(this)">♥</button>
+                    <button class="fav-heart-btn" onclick="toggleLike(event,this)">♥</button>
                     <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=60" class="card-img" alt="Omega Watch">
                     <span class="price-tag-gold">45 000 kr</span>
                 </div>
@@ -653,7 +653,13 @@
             if (count) count.textContent = String(favorites.length);
         }
 
-        function toggleLike(btn) {
+        function toggleLike(eventOrButton, maybeButton) {
+            const event = maybeButton ? eventOrButton : null;
+            const btn = maybeButton || eventOrButton;
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
             const card = btn.closest('.luxury-card');
             if (!card) return;
             const title = card.getAttribute('data-title') || card.querySelector('.card-title')?.textContent.trim();
