@@ -232,11 +232,24 @@ async function loadDeals(){
   if(!cr.error)CODES=cr.data.map(r=>({s:r.store,l:r.logo||String(r.store).slice(0,2),col:r.color,code:r.code,d:(r.description||'')+(r.valid_until?', gäller t.o.m. '+r.valid_until:'')}));
   anim=true;render();
 }
+const LOCAL_FAVS_KEY='fyndaren-local-favorites-v1';
+function readLocalFavs(){
+  try{return new Set((JSON.parse(localStorage.getItem(LOCAL_FAVS_KEY)||'[]')).map(Number))}catch(_){return new Set()}
+}
+function writeLocalFavs(){
+  try{localStorage.setItem(LOCAL_FAVS_KEY,JSON.stringify([...favs]))}catch(_){}
+}
 async function loadFavs(){
-  if(!sb||!user){favs=new Set();render();return}
-  const {data,error}=await sb.from('favorites').select('deal_id').eq('user_id',user.id);
-  if(!error)favs=new Set(data.map(r=>r.deal_id));
-  render();
+  if(!sb||!user){favs=readLocalFavs();render();return}
+  try{
+    const {data,error}=await sb.from('favorites').select('deal_id').eq('user_id',user.id);
+    if(error)throw error;
+    favs=new Set(data.map(r=>Number(r.deal_id)));
+    render();
+  }catch(e){
+    toast('Kunde inte läsa sparlistan. Kontrollera anslutningen.');
+    render();
+  }
 }
 
 function card(o){const f=favs.has(o.id);return `<article class="card"><div class="logo" style="background:${colr(o.col)}">${esc(o.l)}<span class="badge">-${pct(o)}%</span></div><div class="info"><div class="store">${esc(o.s)}<span class="cat"> · ${esc(o.c)}</span></div><h3>${esc(o.n)}</h3><div class="price"><b>${kr(o.p)}</b><s>${kr(o.o)}</s></div>${o.u?`<div class="mute">Jmf: ${esc(o.u)}</div>`:''}${o.m?`<span class="mem">Kräver ${esc(o.m)}</span>`:''}<div class="exp">${clock} Gäller t.o.m. ${esc(o.e)}</div></div><button class="fav ${f?'on':''} ${o.id===popId?'pop':''}" data-fav="${o.id}" aria-pressed="${f}" aria-label="${f?'Ta bort från sparlistan':'Spara i sparlistan'}">${heart}</button></article>`}
@@ -315,12 +328,30 @@ async function doAuth(mode){
 }
 
 async function toggleFav(id){
-  if(!user){openAuth('Logga in för att spara erbjudanden i din sparlista.');return}
+  id=Number(id);
+  if(!Number.isFinite(id)||id<=0){toast('Det här erbjudandet kan inte sparas just nu.');return}
   const had=favs.has(id);
-  had?favs.delete(id):favs.add(id);popId=had?null:id;render();popId=null;
-  const r=had?await sb.from('favorites').delete().eq('deal_id',id).eq('user_id',user.id):await sb.from('favorites').insert({deal_id:id,user_id:user.id});
-  if(r.error){had?favs.add(id):favs.delete(id);render();toast('Det gick inte att spara. Försök igen.')}
-  else toast(had?'Borttagen från sparlistan':'Sparad i sparlistan');
+  if(!user){
+    had?favs.delete(id):favs.add(id);
+    writeLocalFavs();
+    popId=had?null:id;render();popId=null;
+    toast(had?'Borttagen från sparlistan':'Sparad på den här enheten');
+    return;
+  }
+  if(!sb){toast('Anslutningen till sparlistan saknas.');return}
+  had?favs.delete(id):favs.add(id);
+  popId=had?null:id;render();popId=null;
+  try{
+    const result=had
+      ?await sb.from('favorites').delete().eq('deal_id',id).eq('user_id',user.id)
+      :await sb.from('favorites').insert({deal_id:id,user_id:user.id});
+    if(result.error)throw result.error;
+    toast(had?'Borttagen från sparlistan':'Sparad i sparlistan');
+  }catch(e){
+    had?favs.add(id):favs.delete(id);
+    render();
+    toast('Favoriten kunde inte sparas. Försök igen.');
+  }
 }
 
 document.addEventListener('click',e=>{
@@ -349,6 +380,8 @@ if(sb){
     user=session?session.user:null;
     setTimeout(loadFavs,0);
   });
+} else {
+  favs=readLocalFavs();
 }
 loadDeals();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
